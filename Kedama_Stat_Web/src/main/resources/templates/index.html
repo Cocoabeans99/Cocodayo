@@ -1,0 +1,374 @@
+﻿<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>KedamaStat | Index</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Brego Bootstrap 4x admin is super flexible, powerful, clean &amp; modern responsive admin dashboard with unlimited possibilities.">
+<meta name="author" content="GetBootstrap, design by: puffintheme.com">
+
+<link rel="icon" href="favicon.png" type="image/x-icon">
+<!-- VENDOR CSS -->
+<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="assets/vendor/animate-css/vivify.min.css">
+
+<link rel="stylesheet" href="assets/vendor/c3/c3.min.css"/>
+<link rel="stylesheet" href="assets/vendor/chartist/css/chartist.css">
+<link rel="stylesheet" href="assets/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css">
+<link rel="stylesheet" href="assets/vendor/toastr/toastr.min.css">
+<link rel="stylesheet" href="assets/vendor/jvectormap/jquery-jvectormap-2.0.3.css"/>
+
+<!-- MAIN CSS -->
+<link rel="stylesheet" href="assets/css/site.css">
+
+</head>
+<body class="theme-blush">
+
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="assets/images/icon.svg" width="40" height="40" alt="Brego"></div>
+        <p>Loading...</p>
+    </div>
+</div>
+
+<!-- Theme Setting -->
+
+
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+
+<div id="wrapper">
+
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+
+            <div class="navbar-left">
+                <div class="navbar-btn">
+                    <a th:href="@{/}"><img src="assets/images/icon.jpg" alt="Brego Logo" class="img-fluid logo"></a>
+                    <button type="button" class="btn-toggle-offcanvas"><i class="lnr lnr-menu fa fa-bars"></i></button>
+                </div>
+                <form th:action="@{/player}" id="navbar-search" class="navbar-form search-form">
+                    <input id="my_input" th:name="playerid" class="form-control" style="color:black" placeholder="输入玩家ID"
+                           type="text" list="ide2" onkeyup="auto()" autocomplete="off">
+                    <datalist id="ide1">
+                        <option th:each="name: ${names}" th:value="${name}"/>
+                    </datalist>
+                    <datalist id="ide2"></datalist>
+                    <button class="btn btn-default"><i class="icon-magnifier"></i></button>
+                </form>
+            </div>
+            
+			<div class="navbar-right">
+                <div id="navbar-menu">
+                    <ul class="nav navbar-nav">
+                        <li><a href="" class="social icon-menu" title="News">Social</a></li>
+                        <li><a href="" class="news icon-menu" title="News">News</a></li>
+                        <li><a href="" class="megamenu_toggle icon-menu" title="Mega Menu">Mega</a></li>
+                        <li><a href="" class="right_toggle icon-menu" title="Right Menu"><i class="icon-bubbles"></i></a></li>
+                        <li><a href="" class="icon-menu"><i class="icon-power"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="left-sidebar" class="sidebar">
+        <div class="navbar-brand">
+            <a th:href="@{/}"><img src="assets/images/icon.jpg" alt="Brego Logo" class="img-fluid logo"><span>KedamaStat</span></a>
+            <button type="button" class="btn-toggle-offcanvas btn btn-sm float-right"><i class="lnr lnr-menu fa fa-chevron-circle-left"></i></button>
+        </div>
+        <div class="sidebar-scroll">
+            <nav id="left-sidebar-nav" class="sidebar-nav">
+                <ul id="main-menu" class="metismenu">
+                    <li class="header">Main</li>
+					<li class="active"><a th:href="@{/}"><i class="icon-graph"></i> <span>Index</span></a></li>
+                    <li class="header">App</li>
+                    <li><a th:href="@{/rank}"><i class="icon-trophy"></i> <span>Rank</span></a></li>
+                    <li><a><i class="icon-shield"></i> <span>Check[停用]</span></a></li>
+                    <li><a th:href="@{/player?playerid=Akyuu}"><i class="icon-user"></i> <span>Player</span></a></li>
+                </ul>
+            </nav>     
+        </div>
+    </div>
+
+    <div id="main-content">
+        <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-md-6 col-sm-12">
+                    <h1>数据总览</h1>
+                </div>            
+                <div class="col-md-6 col-sm-12 text-right">
+                    <div class="inlineblock vivify swoopInTop delay-900 mr-4">Visitors <span id="mini-bar-chart1" class="mini-bar-chart"></span></div>
+                    <div class="inlineblock vivify swoopInTop delay-950 mr-4">Visits <span id="mini-bar-chart2" class="mini-bar-chart"></span></div>
+                    <div class="inlineblock vivify swoopInTop delay-1000">Chats <span id="mini-bar-chart3" class="mini-bar-chart"></span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+
+            <div class="row clearfix">
+                <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-in-bg bg-indigo text-white rounded-circle"><i class="fa icon-users"></i></div>
+                                <div class="ml-4">
+                                    <span>总玩家数</span>
+                                    <h4 class="mb-0 font-weight-medium">[[${allNum}]]</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-in-bg bg-azura text-white rounded-circle"><i class="fa icon-user-unfollow"></i></div>
+                                <div class="ml-4">
+                                    <span>被Ban玩家数</span>
+                                    <h4 class="mb-0 font-weight-medium">[[${bannedNum}]]</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-in-bg bg-orange text-white rounded-circle"><i class="fa icon-user-following"></i></div>
+                                <div class="ml-4">
+                                    <span>活跃玩家数</span>
+                                    <h4 class="mb-0 font-weight-medium">[[${activeNum}]]</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-in-bg bg-pink text-white rounded-circle"><i class="fa icon-user-follow"></i></div>
+                                <div class="ml-4">
+                                    <span>本月增长数</span>
+                                    <h4 class="mb-0 font-weight-medium">[[${thismonth}]]</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row clearfix">
+                <div class="col-lg-8 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>玩家增长数</h2>
+                            <ul class="header-dropdown dropdown">
+
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div id="dataup" class="ct-chart" style="height: 350px;width: 800px"></div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="header">
+                            <h2>玩家总数</h2>
+                            <ul class="header-dropdown dropdown">
+
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <div id="datanum" class="ct-chart" style="height: 350px;width: 800px"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div id="slider3" class="carousel vert slide" data-ride="carousel" data-interval="1700">
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <div class="card-value float-right text-muted"><i class="wi wi-fog"></i></div>
+                                                <h3 class="mb-1">12°C</h3>
+                                                <div>London</div>
+                                            </div>
+                                            <div class="carousel-item">
+                                                <div class="card-value float-right text-muted"><i class="wi wi-day-cloudy"></i></div>
+                                                <h3 class="mb-1">18°C</h3>
+                                                <div>New York</div>
+                                            </div>
+                                            <div class="carousel-item">
+                                                <div class="card-value float-right text-muted"><i class="wi wi-sunrise"></i></div>
+                                                <h3 class="mb-1">37°C</h3>
+                                                <div>New Delhi</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div id="slider2" class="carousel vert slide" data-ride="carousel" data-interval="2000">
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <div class="card-value float-right text-muted"><i class="icon-drawer"></i></div>
+                                                <h3 class="mb-1">302</h3>
+                                                <div>Inbox</div>
+                                            </div>
+                                            <div class="carousel-item">
+                                                <div class="card-value float-right text-muted"><i class="icon-star"></i></div>
+                                                <h3 class="mb-1">21</h3>
+                                                <div>Starred</div>
+                                            </div>
+                                            <div class="carousel-item">
+                                                <div class="card-value float-right text-muted"><i class="icon-notebook"></i></div>
+                                                <h3 class="mb-1">2</h3>
+                                                <div>Drafts</div>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-value float-right text-muted"><i class="icon-bubbles"></i></div>
+                                    <h3 class="mb-1">102</h3>
+                                    <div>Messages</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>活跃玩家</h2>
+                        </div>
+                        <div class="body">
+                            <ul class="right_chat w_followers list-unstyled mb-0">
+                                <li class="online" th:each="activeplayer:${activeplayers}">
+                                    <div class="media">
+                                        <img class="media-object " th:src="'https://crafatar.com/avatars/' + ${activeplayer.getUuid()} + '?overlay'" alt="">
+                                        <div class="media-body">
+                                            <a th:href="@{/player}+'?playerid='+${activeplayer.getName()}"><span class="name">[[${activeplayer.getName()}]]</span></a>
+                                            <span class="message">本月游玩时长：[[${activeplayer.getPlayed()}]]h</span>
+                                            <span class="badge badge-outline status"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="header">
+                            <h2>新进玩家</h2>
+                        </div>
+                        <div class="body">
+                            <ul class="right_chat w_followers list-unstyled mb-0">
+                                <li class="online" th:each="newplayer:${newplayers}">
+                                    <div class="media">
+                                        <img class="media-object " th:src="'https://crafatar.com/avatars/' + ${newplayer.getUuid()} + '?overlay'" alt="">
+                                        <div class="media-body">
+                                            <a th:href="@{/player}+'?playerid='+${newplayer.getName()}"><span class="name">[[${newplayer.getName()}]]</span></a>
+                                            <span class="message">加入时间：[[${newplayer.getTime_start()}]]</span>
+                                            <span class="badge badge-outline status"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+</div>
+
+ <!--Javascript -->
+<script src="assets/bundles/libscripts.bundle.js"></script>
+<script src="assets/bundles/vendorscripts.bundle.js"></script>
+<script src="assets/bundles/jvectormap.bundle.js"></script>
+<script src="assets/vendor/toastr/toastr.js"></script>
+<script src="assets/bundles/mainscripts.bundle.js"></script>
+<script src="assets/js/index.js"></script>
+<!--<script src="assets/bundles/chartist.bundle.js"></script>-->
+<script type="text/javascript" src="assets/js/echarts.min.js"></script>
+<script type="text/javascript" th:inline="javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart1 = echarts.init(document.getElementById('dataup'));
+
+    // 指定图表的配置项和数据
+    var option1 = {
+        color: '#1d9fe1',
+        tooltip: {},
+        xAxis: {
+            data: [[${months}]]
+        },
+        yAxis: {},
+        series: [{
+            name: '玩家增长数',
+            type: 'bar',
+            data: [[${increases}]]
+
+        }]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart1.setOption(option1);
+</script>
+<script type="text/javascript" th:inline="javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart2 = echarts.init(document.getElementById('datanum'));
+
+    // 指定图表的配置项和数据
+    var option2 = {
+        color: '#1d9fe1',
+        tooltip: {},
+        xAxis: {
+            data: [[${months}]]
+        },
+        yAxis: {},
+        series: [{
+            name: '玩家总数',
+            type: 'line',
+            data: [[${players}]]
+
+        }]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart2.setOption(option2);
+</script>
+<script>
+    function auto() {
+        //console.log("被执行了!");
+        var input = document.getElementById("my_input");
+        my_input.setAttribute("list", "ide1");
+        my_input.setAttribute("onkeyup", "");
+    }
+</script>
+</body>
+</html>

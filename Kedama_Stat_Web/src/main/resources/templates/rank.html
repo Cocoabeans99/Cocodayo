@@ -1,0 +1,659 @@
+﻿<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>KedamaStat | Rank</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Brego Bootstrap 4x admin is super flexible, powerful, clean &amp; modern responsive admin dashboard with unlimited possibilities.">
+    <meta name="author" content="GetBootstrap, design by: puffintheme.com">
+
+    <link rel="icon" href="favicon.png" type="image/x-icon">
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/vendor/animate-css/vivify.min.css">
+
+    <link rel="stylesheet" href="assets/vendor/table-dragger/table-dragger.min.css">
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="assets/css/site.css">
+
+    <style type="text/css">
+        a {color: black;text-decoration:none}
+    </style>
+
+</head>
+<body class="theme-blush">
+
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="assets/images/icon.svg" width="40" height="40" alt="Brego"></div>
+        <p>Loading...</p>
+    </div>
+</div>
+
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+
+<div id="wrapper">
+
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+
+            <div class="navbar-left">
+                <div class="navbar-btn">
+                    <a th:href="@{/}"><img src="assets/images/icon.jpg" alt="Brego Logo" class="img-fluid logo"></a>
+                    <button type="button" class="btn-toggle-offcanvas"><i class="lnr lnr-menu fa fa-bars"></i></button>
+                </div>
+                <form th:action="@{/player}" id="navbar-search" class="navbar-form search-form">
+                    <input id="my_input" th:name="playerid" class="form-control" placeholder="输入玩家ID" type="text" list="ide2" onkeyup="auto()" autocomplete="off">                    <datalist id="ide1">
+                        <option th:each="name: ${names}" th:value="${name}"/>
+                    </datalist>
+                    <datalist id="ide2"></datalist>
+                    <button class="btn btn-default"><i class="icon-magnifier"></i></button>
+                </form>
+            </div>
+
+            <div class="navbar-right">
+                <div id="navbar-menu">
+                    <ul class="nav navbar-nav">
+                        <li><a href="" class="social icon-menu" title="News">Social</a></li>
+                        <li><a href="" class="news icon-menu" title="News">News</a></li>
+                        <li><a href="" class="megamenu_toggle icon-menu" title="Mega Menu">Mega</a></li>
+                        <li><a href="" class="right_toggle icon-menu" title="Right Menu"><i class="icon-bubbles"></i></a></li>
+                        <li><a href="" class="icon-menu"><i class="icon-power"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="left-sidebar" class="sidebar">
+        <div class="navbar-brand">
+            <a th:href="@{/}"><img src="assets/images/icon.jpg" alt="Brego Logo" class="img-fluid logo"><span>KedamaStat</span></a>
+            <button type="button" class="btn-toggle-offcanvas btn btn-sm float-right"><i class="lnr lnr-menu fa fa-chevron-circle-left"></i></button>
+        </div>
+        <div class="sidebar-scroll">
+            <nav id="left-sidebar-nav" class="sidebar-nav">
+                <ul id="main-menu" class="metismenu">
+                    <li class="header">Main</li>
+                    <li><a th:href="@{/}"><i class="icon-graph"></i> <span>Index</span></a></li>
+                    <li class="header">App</li>
+                    <li class="active"><a th:href="@{/rank}"><i class="icon-trophy"></i> <span>Rank</span></a></li>
+                    <li><a><i class="icon-shield"></i> <span>Check[停用]</span></a></li>
+                    <li><a th:href="@{/player?playerid=Akyuu}"><i class="icon-user"></i> <span>Player</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-md-6 col-sm-12">
+                    <h1>数据排名</h1>
+                </div>
+                <div class="col-md-6 col-sm-12 text-right">
+                    <div class="inlineblock vivify swoopInTop delay-900 mr-4">Visitors <span id="mini-bar-chart1" class="mini-bar-chart"></span></div>
+                    <div class="inlineblock vivify swoopInTop delay-950 mr-4">Visits <span id="mini-bar-chart2" class="mini-bar-chart"></span></div>
+                    <div class="inlineblock vivify swoopInTop delay-1000">Chats <span id="mini-bar-chart3" class="mini-bar-chart"></span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row clearfix">
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>红 石 工 程 师</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>使用红石元件次数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="redstone:${redstoneRank}">
+                                <td><a th:text="${redstone.getName()}" th:href="@{/player}+'?playerid='+${redstone.getName()}"></a></td>
+                                <td th:text="${redstone.getRedstone()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>村 庄 卫 士</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>击杀袭击队生物个数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="pillager:${pillagerRank}">
+                                <td><a th:text="${pillager.getName()}" th:href="@{/player}+'?playerid='+${pillager.getName()}"></a></td>
+                                <td th:text="${pillager.getPillager()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>世 界 吞 噬 者</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>总挖掘数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="dig:${digRank}">
+                                    <td><a th:text="${dig.getName()}" th:href="@{/player}+'?playerid='+${dig.getName()}"></a></td>
+                                    <td th:text="${dig.getDig()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>...</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>生物击杀总数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="kill:${killRank}">
+                                    <td><a th:text="${kill.getName()}" th:href="@{/player}+'?playerid='+${kill.getName()}"></a></td>
+                                    <td th:text="${kill.getKill()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>末 日 铁 拳</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>玩家击杀数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="killplayer:${killplayerRank}">
+                                <td><a th:text="${killplayer.getName()}" th:href="@{/player}+'?playerid='+${killplayer.getName()}"></a></td>
+                                <td th:text="${killplayer.getKillplayer()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>死 神</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>死亡次数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="dead:${deadRank}">
+                                <td><a th:text="${dead.getName()}" th:href="@{/player}+'?playerid='+${dead.getName()}"></a></td>
+                                <td th:text="${dead.getDead()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>骑 空 士</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>飞行距离</th>
+                                </tr>
+                                </thead>
+                                </thead>
+                                <tr th:each="fly:${flyRank}">
+                                <td><a th:text="${fly.getName()}" th:href="@{/player}+'?playerid='+${fly.getName()}"></a></td>
+                                <td th:text="${fly.getFly_show()+'km'}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>打 印 机</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>铺设地毯个数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="draw:${drawRank}">
+                                <td><a th:text="${draw.getName()}" th:href="@{/player}+'?playerid='+${draw.getName()}"></a></td>
+                                <td th:text="${draw.getDraw()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>海 王</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>击杀溺尸个数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="aqua:${aquaRank}">
+                                <td><a th:text="${aqua.getName()}" th:href="@{/player}+'?playerid='+${aqua.getName()}"></a></td>
+                                <td th:text="${aqua.getAqua()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>剥 削 者</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>与村民交易次数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="villager:${villagerRank}">
+                                <td><a th:text="${villager.getName()}" th:href="@{/player}+'?playerid='+${villager.getName()}"></a></td>
+                                <td th:text="${villager.getVillager()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2></h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>挖掘沙子个数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="sand:${sandRank}">
+                                    <td><a th:text="${sand.getName()}" th:href="@{/player}+'?playerid='+${sand.getName()}"></a></td>
+                                    <td th:text="${sand.getSand()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2></h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>挖掘砂砾个数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="gravel:${gravelRank}">
+                                    <td><a th:text="${gravel.getName()}" th:href="@{/player}+'?playerid='+${gravel.getName()}"></a></td>
+                                    <td th:text="${gravel.getGravel()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2></h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>击杀潜影贝个数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="shulker:${shulkerRank}">
+                                    <td><a th:text="${shulker.getName()}" th:href="@{/player}+'?playerid='+${shulker.getName()}"></a></td>
+                                    <td th:text="${shulker.getShulker()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>鲨 凋</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>击杀凋零个数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="wither:${witherRank}">
+                                <td><a th:text="${wither.getName()}" th:href="@{/player}+'?playerid='+${wither.getName()}"></a></td>
+                                <td th:text="${wither.getWither()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>调 音 师</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>音符盒放置个数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="musician:${musicianRank}">
+                                <td><a th:text="${musician.getName()}" th:href="@{/player}+'?playerid='+${musician.getName()}"></a></td>
+                                <td th:text="${musician.getMusician()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>债 券 发 行 商</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>出书次数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="writer:${writerRank}">
+                                <td><a th:text="${writer.getName()}" th:href="@{/player}+'?playerid='+${writer.getName()}"></a></td>
+                                <td th:text="${writer.getWriter()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>黑 曜 石 吞 噬 者</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>挖掘黑曜石个数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="mine_obsidian:${mine_obsidianRank}">
+                                <td><a th:text="${mine_obsidian.getName()}" th:href="@{/player}+'?playerid='+${mine_obsidian.getName()}"></a></td>
+                                <td th:text="${mine_obsidian.getMine_obsidian()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>瘾 君 子</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>吃河豚次数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="drug:${drugRank}">
+                                <td><a th:text="${drug.getName()}" th:href="@{/player}+'?playerid='+${drug.getName()}"></a></td>
+                                <td th:text="${drug.getDrug()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>纵 火 犯</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>使用打火石次数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="fire:${fireRank}">
+                                <td><a th:text="${fire.getName()}" th:href="@{/player}+'?playerid='+${fire.getName()}"></a></td>
+                                <td th:text="${fire.getFire()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>种 草 达 人</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>种植树苗个数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="tree:${treeRank}">
+                                <td><a th:text="${tree.getName()}" th:href="@{/player}+'?playerid='+${tree.getName()}"></a></td>
+                                <td th:text="${tree.getTree()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>爬 上 爬 下</h2>
+                            <ul class="header-dropdown dropdown">
+                                <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="body" style="padding-top: 0px">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>使用脚手架次数</th>
+                                </tr>
+                                </thead>
+                                <tr th:each="scaffolding:${scaffoldingRank}">
+                                <td><a th:text="${scaffolding.getName()}" th:href="@{/player}+'?playerid='+${scaffolding.getName()}"></a></td>
+                                <td th:text="${scaffolding.getScaffolding()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Javascript -->
+<script src="assets/bundles/libscripts.bundle.js"></script>
+<script src="assets/bundles/vendorscripts.bundle.js"></script>
+
+<script src="assets/vendor/table-dragger/table-dragger.min.js"></script><script src="assets/bundles/mainscripts.bundle.js"></script><script>
+    // Default
+    tableDragger(document.querySelector("#default-table"));
+
+    // Handler
+    tableDragger(document.querySelector("#handle-table"), { dragHandler: ".handle" });
+
+    // Sort Rows
+    tableDragger(document.querySelector("#row-table"), { mode: "row" });
+
+    // Free
+    tableDragger(document.querySelector("#free-table"), { mode: "row", onlyBody: true, dragHandler: ".handle" });
+
+    // Only Body
+    tableDragger(document.querySelector("#only-bodytable"), { mode: "row", onlyBody: true });
+</script>
+<script>
+    function auto() {
+        console.log("被执行了!");
+        var input = document.getElementById("my_input");
+        my_input.setAttribute("list", "ide1");
+        my_input.setAttribute("onkeyup", "");
+    }
+</script>
+</body>
+</html>

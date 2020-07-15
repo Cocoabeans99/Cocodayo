@@ -1,0 +1,359 @@
+﻿<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>KedamaStat | Profile</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Brego Bootstrap 4x admin is super flexible, powerful, clean &amp; modern responsive admin dashboard with unlimited possibilities.">
+    <meta name="author" content="GetBootstrap, design by: puffintheme.com">
+
+    <link rel="icon" href="favicon.png" type="image/x-icon">
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/vendor/animate-css/vivify.min.css">
+
+    <link rel="stylesheet" href="assets/vendor/table-dragger/table-dragger.min.css">
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="assets/css/site.css">
+
+    <style type="text/css">
+        a {color: black;text-decoration:none}
+    </style>
+
+</head>
+<body class="theme-blush">
+
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="assets/images/icon.svg" width="40" height="40" alt="Brego"></div>
+        <p>Loading...</p>
+    </div>
+</div>
+
+<!-- Overlay For Sidebars -->
+<div class="overlay"></div>
+
+<div id="wrapper">
+
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+
+            <div class="navbar-left">
+                <div class="navbar-btn">
+                    <a th:href="@{/}"><img src="assets/images/icon.jpg" alt="Brego Logo" class="img-fluid logo"></a>
+                    <button type="button" class="btn-toggle-offcanvas"><i class="lnr lnr-menu fa fa-bars"></i></button>
+                </div>
+                <form th:action="@{/player}" id="navbar-search" class="navbar-form search-form">
+                    <input id="my_input" th:name="playerid" class="form-control" placeholder="输入玩家ID" type="text" list="ide2" onkeyup="auto()" autocomplete="off">
+                    <datalist id="ide1">
+                        <option th:each="name: ${names}" th:value="${name}"/>
+                    </datalist>
+                    <datalist id="ide2"></datalist>
+                    <button class="btn btn-default"><i class="icon-magnifier"></i></button>
+                </form>
+            </div>
+
+            <div class="navbar-right">
+                <div id="navbar-menu">
+                    <ul class="nav navbar-nav">
+                        <li><a href="" class="social icon-menu" title="News">Social</a></li>
+                        <li><a href="" class="news icon-menu" title="News">News</a></li>
+                        <li><a href="" class="megamenu_toggle icon-menu" title="Mega Menu">Mega</a></li>
+                        <li><a href="" class="right_toggle icon-menu" title="Right Menu"><i class="icon-bubbles"></i></a></li>
+                        <li><a href="" class="icon-menu"><i class="icon-power"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="left-sidebar" class="sidebar">
+        <div class="navbar-brand">
+            <a th:href="@{/}"><img src="assets/images/icon.jpg" alt="Brego Logo" class="img-fluid logo"><span>KedamaStat</span></a>
+            <button type="button" class="btn-toggle-offcanvas btn btn-sm float-right"><i class="lnr lnr-menu fa fa-chevron-circle-left"></i></button>
+        </div>
+        <div class="sidebar-scroll">
+            <nav id="left-sidebar-nav" class="sidebar-nav">
+                <ul id="main-menu" class="metismenu">
+                    <li class="header">Main</li>
+                    <li><a th:href="@{/}"><i class="icon-graph"></i> <span>Index</span></a></li>
+                    <li class="header">App</li>
+                    <li><a th:href="@{/rank}"><i class="icon-trophy"></i> <span>Rank</span></a></li>
+                    <li><a><i class="icon-shield"></i> <span>Check[停用]</span></a></li>
+                    <li class="active"><a th:href="@{/player?playerid=Akyuu}"><i class="icon-user"></i> <span>Player</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-md-6 col-sm-12">
+                    <h1>个人数据</h1>
+                </div>
+                <div class="col-md-6 col-sm-12 text-right">
+                    <div class="inlineblock vivify swoopInTop delay-900 mr-4">Visitors <span id="mini-bar-chart1" class="mini-bar-chart"></span></div>
+                    <div class="inlineblock vivify swoopInTop delay-950 mr-4">Visits <span id="mini-bar-chart2" class="mini-bar-chart"></span></div>
+                    <div class="inlineblock vivify swoopInTop delay-1000">Chats <span id="mini-bar-chart3" class="mini-bar-chart"></span></div>
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="col-xl-3 col-lg-4 col-md-5" 概览>-->
+        <div class="card" style="width: 300px;float:left;padding-right: 10px">
+                <div class="header">
+                    <h2>Info</h2>
+                    <ul class="header-dropdown dropdown">
+
+                        <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                        <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body">
+                    <small class="text-muted">ID: </small>
+                    <p>[[${player.getName()}]]</p>
+                    <div>
+
+                    </div>
+                    <hr>
+                    <small class="text-muted">是否被ban: </small>
+                    <p th:if="${player.isBanned()==true}" style="color:red;font-weight:bold">是</p>
+                    <p th:if="${player.isBanned()==false}" style="font-weight:bold">否</p>
+                    <hr>
+                    <small class="text-muted">UUID: </small>
+                    <p>[[${player.getUuid()}]]</p>
+                    <hr>
+                    <small class="text-muted">进服时间: </small>
+                    <p class="m-b-0">[[${player.getTime_start()}]]</p>
+                    <hr>
+                    <small class="text-muted">最近上线: </small>
+                    <p class="m-b-0">[[${player.getTime_last()}]]</p>
+                    <hr>
+                    <small class="text-muted">游戏时长: </small>
+                    <p class="m-b-0">[[${player.getTime_lived()}]]h</p>
+                    <hr>
+                    <small class="text-muted">Social: </small>
+                    <p><i class="fa fa-twitter m-r-5"></i> twitter.com/example</p>
+                    <p><i class="fa fa-facebook  m-r-5"></i> facebook.com/example</p>
+                    <p><i class="fa fa-github m-r-5"></i> github.com/example</p>
+                    <p><i class="fa fa-instagram m-r-5"></i> instagram.com/example</p>
+                </div>
+            </div>
+        <!--</div>-->
+        <!--<div class="col-xl-3 col-lg-4 col-md-5" 挖矿>-->
+        <div class="card" style="width: 300px;float:left;padding-right: 10px">
+            <div class="header">
+                <h2>Check</h2>
+                <ul class="header-dropdown dropdown">
+
+                    <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="body">
+                <small class="text-muted">石头挖掘数: </small>
+                <p>[[${player.getStoneDigNum()}]]</p>
+                <hr>
+                <small class="text-muted">矿物挖掘数: </small>
+                <p >[[${player.getMineralDigNum()}]]</p>
+                <hr>
+                <small class="text-muted">钻石挖掘数: </small>
+                <p class="m-b-0">[[${player.getDiamondNum()}]]</p>
+                <hr>
+                <small class="text-muted">绿宝石矿挖掘数: </small>
+                <p class="m-b-0">[[${player.getEmeraldNum()}]]</p>
+                <hr>
+                <small class="text-muted">矿物率: </small>
+                <p>[[${player.getMineralOfStone()}]]%</p>
+                <hr>
+                <small class="text-muted">钻石占矿物百分比: </small>
+                <p class="m-b-0">[[${player.getDiamondOfMineral()}]]%</p>
+                <hr>
+                <small class="text-muted">钻石占矿石百分比: </small>
+                <p class="m-b-0">[[${player.getDiamondOfStone()}]]%</p>
+                <hr>
+                <small class="text-muted">绿宝石占矿物百分比: </small>
+                <p class="m-b-0">[[${player.getEmeraldOfMineral()}]]%</p>
+                <hr>
+                <small class="text-muted">绿宝石占矿石百分比: </small>
+                <p class="m-b-0">[[${player.getEmeraldOfStone()}]]%</p>
+                <hr>
+            </div>
+        </div>
+        <!--</div>-->
+        <!--<div class="col-xl-3 col-lg-4 col-md-5" 数据1>-->
+        <div class="card" style="width: 300px;float:left;padding-right: 10px">
+            <div class="header">
+                <h2>Data</h2>
+                <ul class="header-dropdown dropdown">
+
+                    <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="body">
+                <small class="text-muted">使用红石元件次数: </small>
+                <p>[[${player.getRedstone()}]]</p>
+                <hr>
+                <small class="text-muted">击杀袭击队生物个数: </small>
+                <p >[[${player.getPillager()}]]</p>
+                <hr>
+                <small class="text-muted">总挖掘数: </small>
+                <p class="m-b-0">[[${player.getDig()}]]</p>
+                <hr>
+                <small class="text-muted">生物击杀总数: </small>
+                <p class="m-b-0">[[${player.getKill()}]]</p>
+                <hr>
+                <small class="text-muted">玩家击杀数: </small>
+                <p>[[${player.getKillplayer()}]]</p>
+                <hr>
+                <small class="text-muted">死亡次数: </small>
+                <p class="m-b-0">[[${player.getDead()}]]</p>
+                <hr>
+                <small class="text-muted">飞行格数: </small>
+                <p class="m-b-0">[[${player.getFly()}]]</p>
+                <hr>
+                <small class="text-muted">铺设地毯个数: </small>
+                <p class="m-b-0">[[${player.getDraw()}]]</p>
+                <hr>
+                <small class="text-muted">击杀溺尸个数: </small>
+                <p class="m-b-0">[[${player.getAqua()}]]</p>
+                <hr>
+                <small class="text-muted">与村民交易次数: </small>
+                <p>[[${player.getVillager()}]]</p>
+                <hr>
+            </div>
+        </div>
+        <!--</div>-->
+        <!--<div class="col-xl-3 col-lg-4 col-md-5" 数据2>-->
+        <div class="card" style="width: 300px;float:left;padding-right: 10px">
+            <div class="header">
+                <h2>Data</h2>
+                <ul class="header-dropdown dropdown">
+
+                    <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="body">
+                <small class="text-muted">挖掘沙子个数: </small>
+                <p class="m-b-0">[[${player.getSand()}]]</p>
+                <hr>
+                <small class="text-muted">挖掘砂砾个数: </small>
+                <p class="m-b-0">[[${player.getGravel()}]]</p>
+                <hr>
+                <small class="text-muted">击杀潜影贝个数: </small>
+                <p class="m-b-0">[[${player.getShulker()}]]</p>
+                <hr>
+                <small class="text-muted">击杀凋零个数: </small>
+                <p class="m-b-0">[[${player.getWither()}]]</p>
+                <hr>
+                <small class="text-muted">音符盒放置个数: </small>
+                <p class="m-b-0">[[${player.getMusician()}]]</p>
+                <hr>
+                <small class="text-muted">出书次数: </small>
+                <p class="m-b-0">[[${player.getWriter()}]]</p>
+                <hr>
+                <small class="text-muted">挖掘黑曜石个数: </small>
+                <p class="m-b-0">[[${player.getMine_obsidian()}]]</p>
+                <hr>
+                <small class="text-muted">吃河豚次数: </small>
+                <p class="m-b-0">[[${player.getDrug()}]]</p>
+                <hr>
+                <small class="text-muted">使用打火石次数: </small>
+                <p class="m-b-0">[[${player.getFire()}]]</p>
+                <hr>
+                <small class="text-muted">种植树苗个数: </small>
+                <p class="m-b-0">[[${player.getTree()}]]</p>
+                <hr>
+                <small class="text-muted">使用脚手架次数: </small>
+                <p class="m-b-0">[[${player.getScaffolding()}]]</p>
+                <hr>
+            </div>
+        </div>
+        <!--</div>-->
+        <!--<div class="col-xl-3 col-lg-4 col-md-5" style="float:left" 皮肤>-->
+        <div class="card" style="width: 300px;float:left;padding-right: 10px">
+            <div class="header">
+                <h2>Skin</h2>
+                <ul class="header-dropdown dropdown">
+                    <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="body" style="text-align: center">
+                <img th:src="'https://crafatar.com/renders/body/' + ${player.getUuid()} + '?overlay'"/>
+            </div>
+        </div>
+        <!--</div>-->
+    </div>
+</div>
+
+<!-- Javascript -->
+<script src="assets/bundles/libscripts.bundle.js"></script>
+<script src="assets/bundles/vendorscripts.bundle.js"></script>
+
+<script src="assets/vendor/table-dragger/table-dragger.min.js"></script><script src="assets/bundles/mainscripts.bundle.js"></script><script>
+    // Default
+    tableDragger(document.querySelector("#default-table"));
+
+    // Handler
+    tableDragger(document.querySelector("#handle-table"), { dragHandler: ".handle" });
+
+    // Sort Rows
+    tableDragger(document.querySelector("#row-table"), { mode: "row" });
+
+    // Free
+    tableDragger(document.querySelector("#free-table"), { mode: "row", onlyBody: true, dragHandler: ".handle" });
+
+    // Only Body
+    tableDragger(document.querySelector("#only-bodytable"), { mode: "row", onlyBody: true });
+</script>
+
+<!--Search-->
+<script>
+    function auto() {
+        var input = document.getElementById("my_input");
+        my_input.setAttribute("list", "ide1");
+        my_input.setAttribute("onkeyup", "");
+    }
+</script>
+
+<!--skin-->
+<!--<script src="assets/js/skin/skinview3d.min.js"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/three@0.111.0/build/three.min.js"></script>-->
+<!--<script>-->
+    <!--// var uuid = [[${player.getUuid()}]];-->
+    <!--let skin_url = "http://47.100.36.13:8080/Skin/35b273b6cde14447b29b11377f6ab27d.png";-->
+    <!--let skinViewer = new skinview3d.SkinViewer({-->
+        <!--domElement: document.getElementById("skin_container"),-->
+        <!--width: 250,-->
+        <!--height: 300,-->
+        <!--skinUrl: skin_url-->
+    <!--});-->
+    <!--let control = new skinview3d.createOrbitControls(skinViewer);-->
+    <!--skinViewer.animation = new skinview3d.CompositeAnimation();-->
+    <!--let walk = skinViewer.animation.add(skinview3d.WalkingAnimation);-->
+    <!--walk.speed = 1.5;-->
+    <!--control.enableRotate = true;-->
+    <!--control.enableZoom = false;-->
+    <!--let rotate = skinViewer.animation.add(skinview3d.RotatingAnimation);-->
+<!--</script>-->
+</body>
+</html>
