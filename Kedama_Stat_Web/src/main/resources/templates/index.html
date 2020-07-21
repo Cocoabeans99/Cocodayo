@@ -9,7 +9,7 @@
 <meta name="description" content="Brego Bootstrap 4x admin is super flexible, powerful, clean &amp; modern responsive admin dashboard with unlimited possibilities.">
 <meta name="author" content="GetBootstrap, design by: puffintheme.com">
 
-<link rel="icon" href="favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" th:href="@{/favicon.ico}"/>
 <!-- VENDOR CSS -->
 <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
@@ -317,10 +317,8 @@
 <!--<script src="assets/bundles/chartist.bundle.js"></script>-->
 <script type="text/javascript" src="assets/js/echarts.min.js"></script>
 <script type="text/javascript" th:inline="javascript">
-    // 基于准备好的dom，初始化echarts实例
     var myChart1 = echarts.init(document.getElementById('dataup'));
 
-    // 指定图表的配置项和数据
     var option1 = {
         color: '#1d9fe1',
         tooltip: {},
@@ -336,14 +334,11 @@
         }]
     };
 
-    // 使用刚指定的配置项和数据显示图表。
     myChart1.setOption(option1);
 </script>
 <script type="text/javascript" th:inline="javascript">
-    // 基于准备好的dom，初始化echarts实例
     var myChart2 = echarts.init(document.getElementById('datanum'));
 
-    // 指定图表的配置项和数据
     var option2 = {
         color: '#1d9fe1',
         tooltip: {},
@@ -359,12 +354,10 @@
         }]
     };
 
-    // 使用刚指定的配置项和数据显示图表。
     myChart2.setOption(option2);
 </script>
 <script>
     function auto() {
-        //console.log("被执行了!");
         var input = document.getElementById("my_input");
         my_input.setAttribute("list", "ide1");
         my_input.setAttribute("onkeyup", "");

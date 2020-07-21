@@ -73,7 +73,7 @@ public class MainController {
         return d1.divide(d2, 2, BigDecimal.ROUND_HALF_UP).toString();
     }
 
-    @RequestMapping("/")
+    @RequestMapping({"/", "/index"})
     public String main(Model model){
         String txtFilePath = "C:\\Users\\Administrator\\Desktop\\KS\\count.txt";
         Long count = Get_Visit_Count(txtFilePath);

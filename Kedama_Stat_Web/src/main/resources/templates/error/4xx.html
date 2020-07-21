@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>KedamaStat | Check</title>
+    <title>KedamaStat | 404</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Brego Bootstrap 4x admin is super flexible, powerful, clean &amp; modern responsive admin dashboard with unlimited possibilities.">
     <meta name="author" content="GetBootstrap, design by: puffintheme.com">
 
-    <link rel="icon" href="favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" th:href="@{/favicon.ico}"/>
     <!-- VENDOR CSS -->
     <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
@@ -23,6 +23,7 @@
     <style type="text/css">
         a {color: black;text-decoration:none}
     </style>
+
 </head>
 <body class="theme-blush">
 
@@ -48,7 +49,8 @@
                     <button type="button" class="btn-toggle-offcanvas"><i class="lnr lnr-menu fa fa-bars"></i></button>
                 </div>
                 <form th:action="@{/player}" id="navbar-search" class="navbar-form search-form">
-                    <input id="my_input" th:name="playerid" class="form-control" placeholder="输入玩家ID" type="text" list="ide2" onkeyup="auto()" autocomplete="off">                    <datalist id="ide1">
+                    <input id="my_input" th:name="playerid" class="form-control" placeholder="输入玩家ID" type="text" list="ide2" onkeyup="auto()" autocomplete="off">
+                    <datalist id="ide1">
                         <option th:each="name: ${names}" th:value="${name}"/>
                     </datalist>
                     <datalist id="ide2"></datalist>
@@ -82,8 +84,8 @@
                     <li><a th:href="@{/}"><i class="icon-graph"></i> <span>Index</span></a></li>
                     <li class="header">App</li>
                     <li><a th:href="@{/rank}"><i class="icon-trophy"></i> <span>Rank</span></a></li>
-                    <li class="active"><a th:href="@{/check}"><i class="icon-shield"></i> <span>Check</span></a></li>
-                    <li><a th:href="@{/player?playerid=Akyuu}"><i class="icon-user"></i> <span>Player</span></a></li>
+                    <li><a><i class="icon-shield"></i> <span>Check[停用]</span></a></li>
+                    <li class="active"><a th:href="@{/player?playerid=Akyuu}"><i class="icon-user"></i> <span>Player</span></a></li>
                 </ul>
             </nav>
         </div>
@@ -93,7 +95,7 @@
         <div class="block-header">
             <div class="row clearfix">
                 <div class="col-md-6 col-sm-12">
-                    <h1>矿透筛查</h1>
+                    <h1>参数不合法</h1>
                 </div>
                 <div class="col-md-6 col-sm-12 text-right">
                     <div class="inlineblock vivify swoopInTop delay-900 mr-4">Visitors <span id="mini-bar-chart1" class="mini-bar-chart"></span></div>
@@ -103,66 +105,7 @@
             </div>
         </div>
 
-        <div class="container-fluid">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="header">
-                        <h2>钻石矿 <small>仅供参考，仅统计最近两个月内上线过的玩家</small></h2>
-                        <ul class="header-dropdown dropdown">
-                            <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="body" style="padding-top: 0px">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>UUID</th>
-                                <th>ID</th>
-                                <th>钻石率</th>
-                                <th>钻石数</th>
-                            </tr>
-                            </thead>
-                            <tr th:each="dcheck:${diamondcheck}">
-                            <td th:text="${dcheck.getUuid()}"></td>
-                            <td><a th:text="${dcheck.getName()}" th:href="@{/player}+'?playerid='+${dcheck.getName()}"></a></td>
-                            <td th:text="${dcheck.getDiamondOfMineral()+'%'}"></td>
-                            <td th:text="${dcheck.getDiamondNum()}"></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="header">
-                        <h2>绿宝石矿 <small>仅供参考，仅统计最近两个月内上线过的玩家</small></h2>
-                        <ul class="header-dropdown dropdown">
-                            <li><a href="javascript:void(0);" class="full-screen"><i class="icon-frame"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="body" style="padding-top: 0px">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>UUID</th>
-                                <th>ID</th>
-                                <th>绿宝石率</th>
-                                <th>绿宝石数</th>
-                            </tr>
-                            </thead>
-                            <tr th:each="echeck:${emeraldcheck}">
-                            <td th:text="${echeck.getUuid()}"></td>
-                            <td><a th:text="${echeck.getName()}" th:href="@{/player}+'?playerid='+${echeck.getName()}"></a></td>
-                            <td th:text="${echeck.getEmeraldOfMineral()+'%'}"></td>
-                            <td th:text="${echeck.getEmeraldNum()}"></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-
 </div>
 
 <!-- Javascript -->
